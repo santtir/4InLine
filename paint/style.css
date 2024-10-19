@@ -1,0 +1,63 @@
+/* Estilo global */
+body {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+    background-color: #f8f9fa;
+    height: 1000px;
+}
+
+/* Estilo del encabezado */
+header {
+    background-color: #f1f1f1;
+    padding: 10px 0;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+header .navbar {
+    justify-content: center;
+}
+
+.logoEXA {
+    width: 40px;
+    margin-right: 10px;
+}
+
+h5 {
+    display: inline;
+    margin: 0;
+    vertical-align: middle;
+}
+
+/* Contenedor principal */
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 100px;
+}
+
+/* Estilo del botón */
+#myButtons {
+    margin-right: 15px;
+}
+
+#buttonDraw {
+    background-color: #f28b82;
+    border: none;
+    padding: 10px 20px;
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+#buttonDraw:hover {
+    background-color: #e57373;
+}
+
+/* Estilo del canvas */
+.canvas {
+    border: 2px solid #ccc;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
