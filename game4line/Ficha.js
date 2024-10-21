@@ -16,3 +16,5 @@ class Ficha {
         //se borra
     }
 }
+
+export default Ficha;

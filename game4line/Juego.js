@@ -1,3 +1,9 @@
+'use strict';
+import Tablero from './Tablero.js';
+import Ficha from './Ficha.js';
+
+
+
 class Juego {
     constructor(numRows, numColumns){
         console.log(`Juego creado con ${numRows} filas y ${numColumns} columnas`);
@@ -26,3 +32,4 @@ class Juego {
             console.log("No hay turno asignado");
     }
 }
+export default Juego;

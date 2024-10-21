@@ -1,8 +1,11 @@
+'use strict';
+import Casillero from './Casillero.js';
+
 class Tablero {
     constructor(rows, columns){
         this.rows = rows;
         this.columns = columns;
-        this.casilleros = initTablero();
+        this.casilleros = this.initTablero();
     }
 
     initTablero(){ //es lo mismo que dibujarse
@@ -10,48 +13,116 @@ class Tablero {
         for(let i=0; i<this.rows; i++){ //expando cantidad de casilleros X cantFilas
             casilleros[i] = [];
             for(let j=0; j<this.columns; j++){
-                casilleros[i][j] = new casilleros(i, j); //creo un casillero con numero de fila y columna
+                casilleros[i][j] = new Casillero(i, j); //creo un casillero con numero de fila y columna
             }
         }
         return casilleros;
     }
 
-    verifyWinner(){
-      for(let i=0; i < this.rows; i++){
-        for(let j=0; j < this.columns -3; j++){ //resta 3 porque necesita 4 solamente por ende no debe seguir
-          if (this.tablero.obtenerCasillero(i, j).obtenerFicha() != null && verifyHorizontal(i, j)){
-            console.log('Ganador el color:', this.tablero.obtenerCasillero(i, j).obtenerFicha().color);
-            return
-          }
-        }
-      }
-
-      
-      for(let i=0; i<this.rows-3; i++){
-        for(let j=0; j<this.columns; j++){
-          if(this.tablero.obtenerCasillero(i, j).obtenerFicha() != null && this.verifyVertical(i, j)){
-            console.log('Ganador el color:', this.tablero.obtenerCasillero(i, j).obtenerFicha().color);
-            return;
-          }
-        }
-      }
-    }
-
-    verifyHorizontal(row, column) {
-      return(
-        this.obtenerCasillero(row, column).obtenerFicha().color == this.obtenerCasillero(row, column+1).obtenerFicha().color &&
-        this.obtenerCasillero(row, column).obtenerFicha().color == this.obtenerCasillero(row, column+2).obtenerFicha().color &&
-        this.obtenerCasillero(row, column).obtenerFicha().color == this.obtenerCasillero(row, column+3).obtenerFicha().color
+    verifyWinner() {
+      return (
+          this.verifyHorizontal() || 
+          this.verifyVertical() || 
+          this.verifyDiagonalDescendente() || 
+          this.verifyDiagonalAscendente()
       );
+  }
+
+    verifyHorizontal() {
+      for (let i = 0; i < this.rows; i++) {  // Recorre cada fila
+          for (let j = 0; j < this.columns - 3; j++) {  // Verifica bloques de 4 columnas
+              const ficha = this.obtenerCasillero(i, j).obtenerFicha();
+              if (ficha && this.checkHorizontal(i, j)) {
+                  console.log(`Ganador: ${ficha.color}`);
+                  return true;
+              }
+          }
+      }
+      return false;
     }
 
-    verifyVertical(row, column){
-      return(
-        this.obtenerCasillero(row, column).obtenerFicha().color == this.obtenerCasillero(row+1, column).obtenerFicha().color && 
-        this.obtenerCasillero(row, column).obtenerFicha().color == this.obtenerCasillero(row+2, column).obtenerFicha().color &&
-        this.obtenerCasillero(row, column).obtenerFicha().color == this.obtenerCasillero(row+3, column).obtenerFicha().color 
-      );
+    verifyVertical() {
+      for (let i = 0; i < this.rows - 3; i++) {  // Verifica bloques de 4 filas
+          for (let j = 0; j < this.columns; j++) {  // Recorre cada columna
+              const ficha = this.obtenerCasillero(i, j).obtenerFicha();
+              if (ficha && this.checkVertical(i, j)) {
+                  console.log(`Ganador: ${ficha.color}`);
+                  return true;
+              }
+          }
+      }
+      return false;
     }
+
+    verifyDiagonalDescendente() {
+      for (let i = 0; i < this.rows - 3; i++) {  // Recorre filas
+          for (let j = 0; j < this.columns - 3; j++) {  // Recorre columnas
+              const ficha = this.obtenerCasillero(i, j).obtenerFicha();
+              if (ficha && this.checkDiagonalDescendente(i, j)) {
+                  console.log(`Ganador: ${ficha.color}`);
+                  return true;
+              }
+          }
+      }
+      return false;
+    }
+  
+  verifyDiagonalAscendente() {
+      for (let i = 3; i < this.rows; i++) {  // Recorre filas, empezando desde la cuarta
+          for (let j = 0; j < this.columns - 3; j++) {  // Recorre columnas
+              const ficha = this.obtenerCasillero(i, j).obtenerFicha();
+              if (ficha && this.checkDiagonalAscendente(i, j)) {
+                  console.log(`Ganador: ${ficha.color}`);
+                  return true;
+              }
+          }
+      }
+    return false;
+  }
+
+  checkHorizontal(row, column) {
+      return (
+          this.obtenerCasillero(row, column).obtenerFicha().color ===
+          this.obtenerCasillero(row, column + 1).obtenerFicha().color &&
+          this.obtenerCasillero(row, column).obtenerFicha().color ===
+          this.obtenerCasillero(row, column + 2).obtenerFicha().color &&
+          this.obtenerCasillero(row, column).obtenerFicha().color ===
+          this.obtenerCasillero(row, column + 3).obtenerFicha().color
+      );
+  }
+  
+  checkVertical(row, column) {
+      return (
+          this.obtenerCasillero(row, column).obtenerFicha().color ===
+          this.obtenerCasillero(row + 1, column).obtenerFicha().color &&
+          this.obtenerCasillero(row, column).obtenerFicha().color ===
+          this.obtenerCasillero(row + 2, column).obtenerFicha().color &&
+          this.obtenerCasillero(row, column).obtenerFicha().color ===
+          this.obtenerCasillero(row + 3, column).obtenerFicha().color
+      );
+  }
+
+  checkDiagonalDescendente(row, column) {
+    return (
+        this.obtenerCasillero(row, column).obtenerFicha().color ===
+        this.obtenerCasillero(row + 1, column + 1).obtenerFicha().color &&
+        this.obtenerCasillero(row, column).obtenerFicha().color ===
+        this.obtenerCasillero(row + 2, column + 2).obtenerFicha().color &&
+        this.obtenerCasillero(row, column).obtenerFicha().color ===
+        this.obtenerCasillero(row + 3, column + 3).obtenerFicha().color
+    );
+  }
+
+  checkDiagonalAscendente(row, column) {
+    return (
+        this.obtenerCasillero(row, column).obtenerFicha().color ===
+        this.obtenerCasillero(row - 1, column + 1).obtenerFicha().color &&
+        this.obtenerCasillero(row, column).obtenerFicha().color ===
+        this.obtenerCasillero(row - 2, column + 2).obtenerFicha().color &&
+        this.obtenerCasillero(row, column).obtenerFicha().color ===
+        this.obtenerCasillero(row - 3, column + 3).obtenerFicha().color
+    );
+  }
 
     getCasillero(row, column){
         return this.casilleros[row][column];
@@ -69,13 +140,21 @@ class Tablero {
     }
 
     colocarFicha(ficha, row, column){
-      if(this.casilleros[row][column].obtenerFicha() == null){
-        this.casilleros[row][column].colocarFicha(ficha);
-        return true;
-      } return false;
+      for(let row = this.rows - 1; row >= 0; row--){
+        if(this.casilleroIsEmpty(row, column)) {
+          this.casilleros[row][column].colocarFicha(ficha);
+          return true;
+        } 
+      } return false; //columna llena
+    }
+
+    casilleroIsEmpty(row, column){
+      return this.casilleros[row][column].obtenerFicha() == null;
     }
 
     obtenerCasillero(row, column){
-      return this.casilleros[row][column];
+      return this.casilleros[row][column].obtenerFicha();
     }
   }
+  
+export default Tablero;

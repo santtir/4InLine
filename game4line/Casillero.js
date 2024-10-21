@@ -1,3 +1,4 @@
+'use strict';
 class Casillero{
     constructor(numRow, numColumn){
         this.numRow = numRow;
@@ -34,3 +35,5 @@ class Casillero{
     }
 */
 }
+
+export default Casillero;
