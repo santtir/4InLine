@@ -152,6 +152,8 @@ class Tablero {
       return this.casilleros[row][column].obtenerFicha() == null;
     }
 
+    //preguntar como se hace para devolver al casillero y ficha como objeto 
+
     obtenerCasillero(row, column){
       return this.casilleros[row][column].obtenerFicha();
     }
