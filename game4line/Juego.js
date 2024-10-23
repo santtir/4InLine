@@ -2,8 +2,6 @@
 import Tablero from './Tablero.js';
 import Ficha from './Ficha.js';
 
-
-
 class Juego {
     constructor(numRows, numColumns){
         console.log(`Juego creado con ${numRows} filas y ${numColumns} columnas`);
@@ -11,9 +9,15 @@ class Juego {
         this.j1 = new Ficha("X");
         this.j2 = new Ficha("O");
         this.turn = this.j1;
+        /**
+         * isMouseDown=false
+         * isMouseUp=false
+         * onMouseMove
+         */
     }
 
-    play(row, column){
+    play(row, column){//manejarlo con una sola variable con valor de las lineas
+        //checkear si esta en zona, fila no esta llena, si no hay ganador y si el tablero no esta lleno
         if(this.tablero.colocarFicha(this.turn, row, column)){
             this.tablero.imprimirTablero();
             this.tablero.verifyWinner();

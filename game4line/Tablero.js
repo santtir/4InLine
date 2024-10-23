@@ -2,9 +2,10 @@
 import Casillero from './Casillero.js';
 
 class Tablero {
-    constructor(rows, columns){
-        this.rows = rows;
-        this.columns = columns;
+    constructor(line){
+        this.line = line;
+        this.rows = line + 2;
+        this.columns = line + 3;
         this.casilleros = this.initTablero();
     }
 
@@ -13,22 +14,30 @@ class Tablero {
         for(let i=0; i<this.rows; i++){ //expando cantidad de casilleros X cantFilas
             casilleros[i] = [];
             for(let j=0; j<this.columns; j++){
-                casilleros[i][j] = new Casillero(i, j); //creo un casillero con numero de fila y columna
+                casilleros[i][j] = new Casillero(); //creo un casillero con numero de fila y columna
             }
         }
         return casilleros;
     }
 
-    verifyWinner() {
+    /**
+     * isFichaDropZone(ficha){}
+     */
+
+    /**
+     * metodos de dibujos de tablero -->
+     */
+
+    verifyWinner(posX, posY) {
       return (
-          this.verifyHorizontal() || 
-          this.verifyVertical() || 
-          this.verifyDiagonalDescendente() || 
-          this.verifyDiagonalAscendente()
+          this.verifyHorizontal(posX, posY) || 
+          this.verifyVertical(posX, posY) || 
+          this.verifyDiagonalDescendente(posX, posY) || 
+          this.verifyDiagonalAscendente(posX, posY)
       );
   }
-
-    verifyHorizontal() {
+/*
+    verifyHorizontal(posX, posY) {
       for (let i = 0; i < this.rows; i++) {  // Recorre cada fila
           for (let j = 0; j < this.columns - 3; j++) {  // Verifica bloques de 4 columnas
               const ficha = this.obtenerCasillero(i, j).obtenerFicha();
@@ -39,6 +48,19 @@ class Tablero {
           }
       }
       return false;
+    }
+*/
+
+    verifyHorizontal(posX, posY) {
+      if(posX >= (this.line - 1)){
+        //hago recorrido para izq
+        //checkHorizontal(posX, posY, -1)
+      } else {
+        if(posX <= (this.columns - this.line)){
+          //recorro para derecha
+          //checkHorizontal()
+        }
+      }
     }
 
     verifyVertical() {
@@ -80,7 +102,8 @@ class Tablero {
     return false;
   }
 
-  checkHorizontal(row, column) {
+  /*
+  checkHorizontal(posX, posY) {
       return (
           this.obtenerCasillero(row, column).obtenerFicha().color ===
           this.obtenerCasillero(row, column + 1).obtenerFicha().color &&
@@ -90,7 +113,17 @@ class Tablero {
           this.obtenerCasillero(row, column + 3).obtenerFicha().color
       );
   }
-  
+*/
+
+  checkHorizontal(posX, posY, desplazamiento){
+    let cont = 0;
+    let  casilleroActual = casilleros[posX][posY]; 
+    while(cont < this.line && !casilleroActual.estaVacio()){
+      casilleroActual = this.casilleros[posX+desplazamiento][posY];
+      cont++;
+    }
+  }
+
   checkVertical(row, column) {
       return (
           this.obtenerCasillero(row, column).obtenerFicha().color ===

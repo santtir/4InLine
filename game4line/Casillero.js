@@ -25,6 +25,10 @@ class Casillero{
     getNumColumn(){
         return this.numColumn;
     }
+
+    estaVacio(){
+        return this.ficha == null;
+    }
 /*
     getIsAvailable(){
         return this.isAvailable

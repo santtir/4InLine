@@ -1,6 +1,6 @@
 class Ficha {
-    constructor(color){
-        this.color = color;
+    constructor(equipo){
+        this.equipo = equipo;
         this.selected = false;
     }
 
@@ -14,6 +14,10 @@ class Ficha {
 
     clear(){
         //se borra
+    }
+
+    esIgualA(ficha){
+        return this.equipo == ficha.getEquipo();
     }
 }
 
