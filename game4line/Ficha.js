@@ -8,6 +8,10 @@ class Ficha {
         this.selected = !this.selected;
     }
 
+    getEquipo(){    
+        return this.equipo;
+    }
+
     draw(){
         //se dibuja
     }

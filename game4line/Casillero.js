@@ -29,15 +29,6 @@ class Casillero{
     estaVacio(){
         return this.ficha == null;
     }
-/*
-    getIsAvailable(){
-        return this.isAvailable
-    }
-
-    setIsAvailable(){
-        this.isAvailable = !this.isAvailable;
-    }
-*/
 }
 
 export default Casillero;

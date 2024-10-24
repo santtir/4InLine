@@ -9,6 +9,7 @@ class Juego {
         this.j1 = new Ficha("X");
         this.j2 = new Ficha("O");
         this.turn = this.j1;
+        this.initGame();
         /**
          * isMouseDown=false
          * isMouseUp=false
@@ -16,15 +17,8 @@ class Juego {
          */
     }
 
-    play(row, column){//manejarlo con una sola variable con valor de las lineas
-        //checkear si esta en zona, fila no esta llena, si no hay ganador y si el tablero no esta lleno
-        if(this.tablero.colocarFicha(this.turn, row, column)){
-            this.tablero.imprimirTablero();
-            this.tablero.verifyWinner();
-            this.changeTurn();
-        } else {
-            console.log('casillero ocupado');
-        }
+    initGame(){
+        this.tablero.imprimirTablero();
     }
 
     changeTurn(){
@@ -34,6 +28,14 @@ class Juego {
             this.turn = this.j1;
         } else
             console.log("No hay turno asignado");
+    }
+
+    getEquipoJ1(){        
+        return this.j1.getEquipo();
+    }
+
+    getEquipoJ2(){
+        return this.j2.getEquipo();
     }
 }
 export default Juego;

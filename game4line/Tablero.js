@@ -2,22 +2,27 @@
 import Casillero from './Casillero.js';
 
 class Tablero {
+    casilleros = [];
     constructor(line){
         this.line = line;
         this.rows = line + 2;
         this.columns = line + 3;
-        this.casilleros = this.initTablero();
+        this.initTablero();
     }
 
+    //----- CREAR TABLERO---------------
     initTablero(){ //es lo mismo que dibujarse
-        const casilleros = [];
         for(let i=0; i<this.rows; i++){ //expando cantidad de casilleros X cantFilas
-            casilleros[i] = [];
+          this.casilleros[i] = [];
             for(let j=0; j<this.columns; j++){
-                casilleros[i][j] = new Casillero(); //creo un casillero con numero de fila y columna
+              this.casilleros[i][j] = new Casillero(); //creo un casillero con numero de fila y columna
             }
         }
-        return casilleros;
+    }
+
+    //IMPRIMIR TABLERO EN CONSOLA
+    imprimirTablero() {
+      console.log(this.casilleros);
     }
 
     /**
@@ -27,7 +32,7 @@ class Tablero {
     /**
      * metodos de dibujos de tablero -->
      */
-
+//-----------VERIFICAR GANADOR-----------
     verifyWinner(posX, posY) {
       return (
           this.verifyHorizontal(posX, posY) || 
@@ -36,21 +41,8 @@ class Tablero {
           this.verifyDiagonalAscendente(posX, posY)
       );
   }
-/*
-    verifyHorizontal(posX, posY) {
-      for (let i = 0; i < this.rows; i++) {  // Recorre cada fila
-          for (let j = 0; j < this.columns - 3; j++) {  // Verifica bloques de 4 columnas
-              const ficha = this.obtenerCasillero(i, j).obtenerFicha();
-              if (ficha && this.checkHorizontal(i, j)) {
-                  console.log(`Ganador: ${ficha.color}`);
-                  return true;
-              }
-          }
-      }
-      return false;
-    }
-*/
 
+//HORIZONTAL
     verifyHorizontal(posX, posY) {
       if(posX >= (this.line - 1)){
         //hago recorrido para izq
@@ -58,6 +50,7 @@ class Tablero {
       } else {
         if(posX <= (this.columns - this.line)){
           //recorro para derecha
+          while(posX+1)
           //checkHorizontal()
         }
       }
@@ -102,18 +95,6 @@ class Tablero {
     return false;
   }
 
-  /*
-  checkHorizontal(posX, posY) {
-      return (
-          this.obtenerCasillero(row, column).obtenerFicha().color ===
-          this.obtenerCasillero(row, column + 1).obtenerFicha().color &&
-          this.obtenerCasillero(row, column).obtenerFicha().color ===
-          this.obtenerCasillero(row, column + 2).obtenerFicha().color &&
-          this.obtenerCasillero(row, column).obtenerFicha().color ===
-          this.obtenerCasillero(row, column + 3).obtenerFicha().color
-      );
-  }
-*/
 
   checkHorizontal(posX, posY, desplazamiento){
     let cont = 0;
@@ -161,34 +142,10 @@ class Tablero {
         return this.casilleros[row][column];
     }
 
-    //imprimir y poder verlo por consola
-    imprimirTablero() {
-        console.log(this.casilleros.map(fila => fila.map(casillero => {
-          if (casillero.obtenerFicha() === null) {
-            return '-';
-          } else {
-            return casillero.obtenerFicha().color;
-          }
-        }).join(' | ')).join('\n'));
-    }
-
-    colocarFicha(ficha, row, column){
-      for(let row = this.rows - 1; row >= 0; row--){
-        if(this.casilleroIsEmpty(row, column)) {
-          this.casilleros[row][column].colocarFicha(ficha);
-          return true;
-        } 
-      } return false; //columna llena
-    }
-
-    casilleroIsEmpty(row, column){
-      return this.casilleros[row][column].obtenerFicha() == null;
-    }
-
-    //preguntar como se hace para devolver al casillero y ficha como objeto 
-
-    obtenerCasillero(row, column){
-      return this.casilleros[row][column].obtenerFicha();
+    // //------COLOCAR FICHA------
+    colocarFicha(ficha, posX, posY){
+      this.casilleros[posX][posY] = ficha;
+      
     }
   }
   
